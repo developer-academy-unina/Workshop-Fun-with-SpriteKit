@@ -31,7 +31,7 @@ The template is super simple and provides:
             alt="coverage"></a>
 </p>
 
-## How to use the template
+**How to use the template**
 
 The template is fully commented to guide you while creating your own arcade game prototype.
 
