@@ -4,13 +4,6 @@ Project template for the workshop Fun with SpriteKit, where people use it as the
 You should have some preliminary knowledge about SpriteKit to be able to go through this activity.
 
 ## ArcadeGameTemplate
-This project is at the core of the activity and is used to complete all the steps demonstrated in it.
-
-The template is super simple and provides:
-* Three different states: Main Menu, Playing and Game Over
-* Customizable screen for instructions
-* Game Logic layer separated from the Game Scene
-* Scoring system by points and time
 
 <p align="center">
     <a href="#" alt="Version">
@@ -30,6 +23,14 @@ The template is super simple and provides:
         <img src="https://img.shields.io/static/v1?label=Frameworks%20used&message=SwiftUI, SpriteKit&color=brightgreen&logo=swift"
             alt="coverage"></a>
 </p>
+
+This project is at the core of the activity and is used to complete all the steps demonstrated in it.
+
+The template is super simple and provides:
+* Three different states: Main Menu, Playing and Game Over
+* Customizable screen for instructions
+* Game Logic layer separated from the Game Scene
+* Scoring system by points and time
 
 **How to use the template**
 
