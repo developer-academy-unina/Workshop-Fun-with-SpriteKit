@@ -3,8 +3,14 @@ Project template for the workshop Fun with SpriteKit, where people use it as the
 
 You should have some preliminary knowledge about SpriteKit to be able to go through this activity.
 
-### non-modal [v: 1.0]
+## ArcadeGameTemplate
 This project is at the core of the activity and is used to complete all the steps demonstrated in it.
+
+The template is super simple and provides:
+* Three different states: Main Menu, Playing and Game Over
+* Customizable screen for instructions
+* Game Logic layer separated from the Game Scene
+* Scoring system by points and time
 
 <p align="center">
     <a href="#" alt="Version">
@@ -24,6 +30,14 @@ This project is at the core of the activity and is used to complete all the step
         <img src="https://img.shields.io/static/v1?label=Frameworks%20used&message=SwiftUI, SpriteKit&color=brightgreen&logo=swift"
             alt="coverage"></a>
 </p>
+
+## How to use the template
+
+The template is fully commented to guide you while creating your own arcade game prototype.
+
+* Fully customize the interfaces using SwiftUI
+* Write your Game Logic separate from your Game Scene
+* Take advantage of all SpriteKit has to offer in your Game Scene
 
 **Editors**: 
 
