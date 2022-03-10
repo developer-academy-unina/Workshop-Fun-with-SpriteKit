@@ -5,6 +5,13 @@
 
 import SwiftUI
 
+/**
+ * # GameDurationView
+ * Custom UI to present how many seconds have passed since the beginning of the gameplay session.
+ *
+ * Customize it to match the visual identity of your game.
+ */
+
 struct GameDurationView: View {
     @Binding var time: TimeInterval
     

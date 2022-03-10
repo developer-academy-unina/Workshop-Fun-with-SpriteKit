@@ -7,9 +7,16 @@ import SpriteKit
 import SwiftUI
 
 class ArcadeGameScene: SKScene {
-    // TODO: Add comment
+    /**
+     * # The Game Logic
+     *     The game logic keeps track of the game variables
+     *   you can use it to display information on the SwiftUI view,
+     *   for example, and comunicate with the Game Scene.
+     **/
     var gameLogic: ArcadeGameLogic = ArcadeGameLogic.shared
     
+    // Keeps track of when the last update happend.
+    // Used to calculate how much time has passed between updates.
     var lastUpdate: TimeInterval = 0
     
     override func didMove(to view: SKView) {
@@ -21,17 +28,18 @@ class ArcadeGameScene: SKScene {
         
         // ...
         
-        // 1. If the game over condition is met, the game will finish
-        if self.isGameOver {
-            self.finishGame()
-        }
+        // If the game over condition is met, the game will finish
+        if self.isGameOver { self.finishGame() }
         
-        // 2. The first time, the
+        // The first time the update function is called we must initialize the
+        // lastUpdate variable
         if self.lastUpdate == 0 { self.lastUpdate = currentTime }
         
-        // TODO: Add comment here
+        // Calculates how much time has passed since the last update
         let timeElapsedSinceLastUpdate = currentTime - self.lastUpdate
+        // Increments the length of the game session at the game logic
         self.gameLogic.increaseSessionTime(by: timeElapsedSinceLastUpdate)
+        
         self.lastUpdate = currentTime
     }
     
@@ -44,11 +52,11 @@ extension ArcadeGameScene {
         self.gameLogic.setUpGame()
         self.backgroundColor = SKColor.white
         
-        // ...
+        // TODO: Customize!
     }
     
     private func setUpPhysicsWorld() {
-        // ...
+        // TODO: Customize!
     }
     
     private func restartGame() {
@@ -63,17 +71,18 @@ extension ArcadeGameScene {
     //TODO: Add comment here
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        print("-- Scoring a point!")
-        self.gameLogic.score(points: 1)
+        
+        // TODO: Customize!
+        
         self.gameLogic.finishTheGame()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // ...
+        // TODO: Customize!
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // ...
+        // TODO: Customize!
     }
     
 }
@@ -94,10 +103,19 @@ extension ArcadeGameScene {
      **/
     
     var isGameOver: Bool {
+        // TODO: Customize!
+        
+        // Did you reach the time limit?
+        // Are the health points depleted?
+        // Did an enemy cross a position it should not have crossed?
+        
         return gameLogic.isGameOver
     }
     
     private func finishGame() {
+        
+        // TODO: Customize!
+        
         gameLogic.isGameOver = true
     }
     
@@ -105,7 +123,9 @@ extension ArcadeGameScene {
 
 // MARK: - Register Score
 extension ArcadeGameScene {
+    
     private func registerScore() {
-        // TODO: Implement a way to register the score of the player after the game is over
+        // TODO: Customize!
     }
+    
 }

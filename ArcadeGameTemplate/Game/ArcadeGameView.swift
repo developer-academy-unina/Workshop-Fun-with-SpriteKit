@@ -52,10 +52,18 @@ struct ArcadeGameView: View {
                 .statusBar(hidden: true)
             
             HStack() {
-                // Shows the duration of the game session
+                /**
+                 * UI element showing the duration of the game session.
+                 * Remove it if your game is not based on time.
+                 */
                 GameDurationView(time: $gameLogic.sessionDuration)
+                
                 Spacer()
-                // Presents the score of the player
+                
+                /**
+                 * UI element showing the current score of the player.
+                 * Remove it if your game is not based on scoring points.
+                 */
                 GameScoreView(score: $gameLogic.currentScore)
             }
             .padding()
@@ -64,7 +72,9 @@ struct ArcadeGameView: View {
         .onChange(of: gameLogic.isGameOver) { _ in
             if gameLogic.isGameOver {
                 
-                //TIP: You can add other types of animations here before presenting the game over screen.
+                /** # PRO TIP!
+                 * You can experiment by adding other types of animations here before presenting the game over screen.
+                 */
                 
                 withAnimation {
                     self.presentGameOverScreen()
@@ -76,12 +86,18 @@ struct ArcadeGameView: View {
         }
     }
     
-    // TODO: Add comment here
+    /**
+     * ### Function responsible for presenting the main screen
+     * At the moment it is not being used, but it could be used in a Pause menu for example.
+     */
     private func presentMainScreen() {
         self.currentGameState = .mainScreen
     }
     
-    // TODO: Add comment here
+    /**
+     * ### Function responsible for presenting the game over screen.
+     * It changes the current game state to present the GameOverView.
+     */
     private func presentGameOverScreen() {
         self.currentGameState = .gameOver
     }

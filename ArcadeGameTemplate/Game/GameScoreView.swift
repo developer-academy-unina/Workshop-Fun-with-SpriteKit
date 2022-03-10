@@ -5,6 +5,13 @@
 
 import SwiftUI
 
+/**
+ * # GameScoreView
+ * Custom UI to present how many points the player has scored.
+ *
+ * Customize it to match the visual identity of your game.
+ */
+
 struct GameScoreView: View {
     @Binding var score: Int
     

@@ -32,14 +32,19 @@ struct MainScreenView: View {
         VStack(alignment: .center, spacing: 16.0) {
             Spacer()
             
-            /** **TIP:** The game title can be customized to represent the visual identity of the game **/
+            /**
+             * # PRO TIP!
+             * The game title can be customized to represent the visual identity of the game
+             */
             Text("\(self.gameTitle)")
                 .font(.title)
                 .fontWeight(.black)
             
             Spacer()
             
-            /** To customize the instructions, change it on the **Constants.swift** file **/
+            /**
+             * To customize the instructions, check the **Constants.swift** file
+             */
             ForEach(self.gameInstructions, id: \.title) { instruction in
                 GroupBox(label: Label("\(instruction.title)", systemImage: "\(instruction.icon)").foregroundColor(self.accentColor)) {
                     HStack {
@@ -52,7 +57,9 @@ struct MainScreenView: View {
             
             Spacer()
             
-            /** Customize the appearance of the **Insert a Coin** button to match the visual identity of your game **/
+            /**
+             * Customize the appearance of the **Insert a Coin** button to match the visual identity of your game
+             */
             Button {
                 withAnimation { self.startGame() }
             } label: {
@@ -69,6 +76,10 @@ struct MainScreenView: View {
         .statusBar(hidden: true)
     }
     
+    /**
+     * Function responsible to start the game.
+     * It changes the current game state to present the view which houses the game scene.
+     */
     private func startGame() {
         print("- Starting the game...")
         self.currentGameState = .playing

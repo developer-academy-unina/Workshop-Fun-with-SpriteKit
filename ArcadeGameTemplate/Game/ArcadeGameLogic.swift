@@ -10,8 +10,11 @@ class ArcadeGameLogic: ObservableObject {
     // Single instance of the class
     static let shared: ArcadeGameLogic = ArcadeGameLogic()
     
-    // TODO: Add comment here
+    // Function responsible to set up the game before it starts.
     func setUpGame() {
+        
+        // TODO: Customize!
+        
         self.currentScore = 0
         self.sessionDuration = 0
         
@@ -23,6 +26,9 @@ class ArcadeGameLogic: ObservableObject {
     
     // Increases the score by a certain amount of points
     func score(points: Int) {
+        
+        // TODO: Customize!
+        
         self.currentScore = self.currentScore + points
     }
     
@@ -34,6 +40,9 @@ class ArcadeGameLogic: ObservableObject {
     }
     
     func restartGame() {
+        
+        // TODO: Customize!
+        
         self.setUpGame()
     }
     
