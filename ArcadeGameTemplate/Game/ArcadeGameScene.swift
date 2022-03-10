@@ -19,6 +19,9 @@ class ArcadeGameScene: SKScene {
     // Used to calculate how much time has passed between updates.
     var lastUpdate: TimeInterval = 0
     
+    // 1.
+    var player: SKShapeNode!
+    
     override func didMove(to view: SKView) {
         self.setUpGame()
         self.setUpPhysicsWorld()
@@ -53,6 +56,9 @@ extension ArcadeGameScene {
         self.backgroundColor = SKColor.white
         
         // TODO: Customize!
+        
+        // 3.
+        self.createPlayer(at: CGPoint(x: self.frame.width/2, y: self.frame.height/6))
     }
     
     private func setUpPhysicsWorld() {
@@ -61,6 +67,18 @@ extension ArcadeGameScene {
     
     private func restartGame() {
         self.gameLogic.restartGame()
+    }
+    
+    // 2.
+    private func createPlayer(at position: CGPoint) {
+        self.player = SKShapeNode(circleOfRadius: 25.0)
+        self.player.name = ""
+        self.player.fillColor = SKColor.blue
+        self.player.strokeColor = SKColor.black
+        
+        self.player.position = position
+        
+        addChild(self.player)
     }
 }
 
