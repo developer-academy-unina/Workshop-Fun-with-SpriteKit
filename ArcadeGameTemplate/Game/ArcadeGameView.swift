@@ -2,24 +2,39 @@
 //  GameView.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 07/03/22.
-//
 
 import SwiftUI
 import SpriteKit
 
+/**
+ * # ArcadeGameView
+ *   This view is responsible for presenting the game and the game UI.
+ *  In here you can add and customize:
+ *  - UI elements
+ *  - Different effects for transitions in and out of the game scene
+ **/
+
 struct ArcadeGameView: View {
-    // TODO: Add comment here
+    
+    /**
+     * # The Game Logic
+     *     The game logic keeps track of the game variables
+     *   you can use it to display information on the SwiftUI view,
+     *   for example, and comunicate with the Game Scene.
+     **/
     @StateObject var gameLogic: ArcadeGameLogic =  ArcadeGameLogic.shared
     
-    // TODO: Add comment here
+    // The game state is used to transition between the different states of the game
     @Binding var currentGameState: GameState
     
-    // TODO: Add comment here
     private var screenWidth: CGFloat { UIScreen.main.bounds.size.width }
     private var screenHeight: CGFloat { UIScreen.main.bounds.size.height }
     
-    // TODO: Add comment here
+    /**
+     * # The Game Scene
+     *   If you need to do any configurations on your game scene, like changing it's size
+     *   for example, do it here.
+     **/
     var arcadeGameScene: ArcadeGameScene {
         let scene = ArcadeGameScene()
         
@@ -31,16 +46,16 @@ struct ArcadeGameView: View {
     
     var body: some View {
         ZStack(alignment: .top) {
-            // TODO: Add comment here
+            // View that presents the game scene
             SpriteView(scene: self.arcadeGameScene)
                 .frame(width: screenWidth, height: screenHeight)
                 .statusBar(hidden: true)
             
             HStack() {
-                // TODO: Add comment here
+                // Shows the duration of the game session
                 GameDurationView(time: $gameLogic.sessionDuration)
                 Spacer()
-                // TODO: Add comment here
+                // Presents the score of the player
                 GameScoreView(score: $gameLogic.currentScore)
             }
             .padding()
@@ -48,6 +63,9 @@ struct ArcadeGameView: View {
         }
         .onChange(of: gameLogic.isGameOver) { _ in
             if gameLogic.isGameOver {
+                
+                //TIP: You can add other types of animations here before presenting the game over screen.
+                
                 withAnimation {
                     self.presentGameOverScreen()
                 }

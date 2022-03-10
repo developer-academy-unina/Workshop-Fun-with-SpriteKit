@@ -2,10 +2,13 @@
 //  GameOverView.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 07/03/22.
-//
 
 import SwiftUI
+
+/**
+ * # GameOverView
+ *   This view is responsible for...
+ **/
 
 struct GameOverView: View {
     @Binding var currentGameState: GameState
@@ -19,10 +22,7 @@ struct GameOverView: View {
                 Spacer()
                 
                 Button {
-                    print("- Back to menu.!")
-                    withAnimation {
-                        self.backToMainScreen()
-                    }
+                    withAnimation { self.backToMainScreen() }
                 } label: {
                     Image(systemName: "arrow.backward")
                         .foregroundColor(.black)
@@ -34,10 +34,7 @@ struct GameOverView: View {
                 Spacer()
                 
                 Button {
-                    print("- Restarting game.")
-                    withAnimation {
-                        self.restartGame()
-                    }
+                    withAnimation { self.restartGame() }
                 } label: {
                     Image(systemName: "arrow.clockwise")
                         .foregroundColor(.black)
@@ -49,14 +46,15 @@ struct GameOverView: View {
                 Spacer()
             }
         }
-    }
-    
-    private func restartGame() {
-        self.currentGameState = .playing
+        .statusBar(hidden: true)
     }
     
     private func backToMainScreen() {
         self.currentGameState = .mainScreen
+    }
+    
+    private func restartGame() {
+        self.currentGameState = .playing
     }
 }
 

@@ -2,17 +2,22 @@
 //  ContentView.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 07/03/22.
-//
 
 import SwiftUI
 
+/**
+ * # ContentView
+ *
+ *   This view is responsible for managing the states of the game, presenting the proper view.
+ **/
+
 struct ContentView: View {
     
-    // TODO: Add comment here
+    // The navigation of the app is based on the state of the game.
+    // Each state presents a different
     @State var currentGameState: GameState = .mainScreen
     
-    // TODO: Add comment here
+    // The game logic is a singleton object shared among the different views of the application
     @StateObject var gameLogic: ArcadeGameLogic = ArcadeGameLogic()
     
     var body: some View {

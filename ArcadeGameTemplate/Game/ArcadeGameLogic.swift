@@ -2,8 +2,6 @@
 //  GameLogic.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 07/03/22.
-//
 
 import Foundation
 
@@ -11,6 +9,14 @@ class ArcadeGameLogic: ObservableObject {
     
     // Single instance of the class
     static let shared: ArcadeGameLogic = ArcadeGameLogic()
+    
+    // TODO: Add comment here
+    func setUpGame() {
+        self.currentScore = 0
+        self.sessionDuration = 0
+        
+        self.isGameOver = false
+    }
     
     // Keeps track of the current score of the player
     @Published var currentScore: Int = 0
@@ -28,9 +34,7 @@ class ArcadeGameLogic: ObservableObject {
     }
     
     func restartGame() {
-        self.currentScore = 0
-        self.sessionDuration = 0
-        self.isGameOver = false
+        self.setUpGame()
     }
     
     // Game Over Conditions

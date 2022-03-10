@@ -2,8 +2,6 @@
 //  GameScoreView.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 08/03/22.
-//
 
 import SwiftUI
 

@@ -2,8 +2,6 @@
 //  ArcadeGameScene.swift
 //  ArcadeGameTemplate
 //
-//  Created by Tiago Pereira on 07/03/22.
-//
 
 import SpriteKit
 import SwiftUI
@@ -20,12 +18,16 @@ class ArcadeGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
+        
         // ...
         
-        // TODO: Add comment here
-        if self.lastUpdate == 0 {
-            self.lastUpdate = currentTime
+        // 1. If the game over condition is met, the game will finish
+        if self.isGameOver {
+            self.finishGame()
         }
+        
+        // 2. The first time, the
+        if self.lastUpdate == 0 { self.lastUpdate = currentTime }
         
         // TODO: Add comment here
         let timeElapsedSinceLastUpdate = currentTime - self.lastUpdate
@@ -35,10 +37,11 @@ class ArcadeGameScene: SKScene {
     
 }
 
-// MARK: - Game Scene set up
+// MARK: - Game Scene Set Up
 extension ArcadeGameScene {
     
     private func setUpGame() {
+        self.gameLogic.setUpGame()
         self.backgroundColor = SKColor.white
         
         // ...
@@ -62,8 +65,7 @@ extension ArcadeGameScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         print("-- Scoring a point!")
         self.gameLogic.score(points: 1)
-        
-        self.finishGame()
+        self.gameLogic.finishTheGame()
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -80,10 +82,19 @@ extension ArcadeGameScene {
 // MARK: - Game Over Condition
 extension ArcadeGameScene {
     
-    // TODO: Add comment here
-    // time over, lives ended, enemies missed, screen is full...
+    /**
+     * Implement the Game Over condition.
+     * Remember that an arcade game always ends! How will the player eventually lose?
+     *
+     * Some examples of game over conditions are:
+     * - The time is over!
+     * - The player health is depleated!
+     * - The enemies have completed their goal!
+     * - The screen is full!
+     **/
+    
     var isGameOver: Bool {
-        return false
+        return gameLogic.isGameOver
     }
     
     private func finishGame() {
@@ -94,11 +105,7 @@ extension ArcadeGameScene {
 
 // MARK: - Register Score
 extension ArcadeGameScene {
-    // TODO: Add comment here
     private func registerScore() {
-        
-        // ...
-        
+        // TODO: Implement a way to register the score of the player after the game is over
     }
-    
 }

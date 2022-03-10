@@ -69,7 +69,7 @@
 			children = (
 				271CB25027D6569700615359 /* ArcadeGameTemplateApp.swift */,
 				271CB25227D6569700615359 /* ContentView.swift */,
-				271CB26A27D6659600615359 /* Constants.swift */,
+				27EA291327D91416005A20C0 /* Supporting Files */,
 				271CB26C27D6A13D00615359 /* Main Screen */,
 				271CB26427D656D700615359 /* Game */,
 				271CB26927D6571000615359 /* Game Over */,
@@ -113,6 +113,14 @@
 				271CB26027D656BA00615359 /* MainScreenView.swift */,
 			);
 			path = "Main Screen";
+			sourceTree = "<group>";
+		};
+		27EA291327D91416005A20C0 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				271CB26A27D6659600615359 /* Constants.swift */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -331,6 +339,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -360,6 +369,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
