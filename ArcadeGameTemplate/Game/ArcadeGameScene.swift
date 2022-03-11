@@ -45,7 +45,7 @@ class ArcadeGameScene: SKScene {
         
         self.lastUpdate = currentTime
         
-        // 2.
+        
         if isMovingToTheRight {
             self.moveRight()
         }
@@ -74,6 +74,9 @@ extension ArcadeGameScene {
     
     private func setUpPhysicsWorld() {
         physicsWorld.gravity = CGVector(dx: 0, dy: -0.9)
+        
+        // 5.
+        physicsWorld.contactDelegate = self
     }
     
     private func restartGame() {
@@ -82,7 +85,7 @@ extension ArcadeGameScene {
     
     private func createPlayer(at position: CGPoint) {
         self.player = SKShapeNode(circleOfRadius: 25.0)
-        self.player.name = ""
+        self.player.name = "player"
         self.player.fillColor = SKColor.blue
         self.player.strokeColor = SKColor.black
         
@@ -90,6 +93,16 @@ extension ArcadeGameScene {
         
         player.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
         player.physicsBody?.affectedByGravity = false
+        
+        // 2.
+        player.physicsBody?.categoryBitMask = PhysicsCategory.player
+        player.physicsBody?.contactTestBitMask = PhysicsCategory.asteroid
+        player.physicsBody?.collisionBitMask = PhysicsCategory.asteroid
+        
+        // Set up the position constraints for the player
+        let xRange = SKRange(lowerLimit: 0, upperLimit: frame.width)
+        let xConstraint = SKConstraint.positionX(xRange)
+        self.player.constraints = [xConstraint]
         
         addChild(self.player)
     }
@@ -138,12 +151,12 @@ extension ArcadeGameScene {
 
 // MARK: - Player Movement
 extension ArcadeGameScene {
-    // 1.
+    
     private func moveLeft() {
         self.player.physicsBody?.applyForce(CGVector(dx: 5, dy: 0))
         print("Moving Left: \(player.physicsBody!.velocity)")
     }
-    // 1.
+    
     private func moveRight() {
         self.player.physicsBody?.applyForce(CGVector(dx: -5, dy: 0))
         print("Moving Right: \(player.physicsBody!.velocity)")
@@ -198,13 +211,18 @@ extension ArcadeGameScene {
     
     private func newAsteroid(at position: CGPoint) {
         let newAsteroid = SKShapeNode(circleOfRadius: 25.0)
-        
+        newAsteroid.name = "asteroid"
         newAsteroid.fillColor = SKColor.red
         newAsteroid.strokeColor = SKColor.black
         
         newAsteroid.position = position
         
         newAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        
+        // 3.
+        newAsteroid.physicsBody?.categoryBitMask = PhysicsCategory.asteroid
+        newAsteroid.physicsBody?.contactTestBitMask = PhysicsCategory.player
+        newAsteroid.physicsBody?.collisionBitMask = PhysicsCategory.player
         
         addChild(newAsteroid)
         
@@ -236,6 +254,34 @@ extension ArcadeGameScene {
         let asteroidCycleAction = SKAction.repeatForever(createAndWaitAction)
         
         run(asteroidCycleAction)
+    }
+    
+}
+
+// 1.
+struct PhysicsCategory {
+    static let none     : UInt32 = 0
+    static let all      : UInt32 = UInt32.max
+    static let player   : UInt32 = 0b1
+    static let asteroid : UInt32 = 0b10
+}
+
+// 4.
+// MARK: - Contacts and Collisions
+extension ArcadeGameScene: SKPhysicsContactDelegate {
+
+    func didBegin(_ contact: SKPhysicsContact) {
+        // 6.
+        let firstBody: SKPhysicsBody = contact.bodyA
+        let secondBody: SKPhysicsBody = contact.bodyB
+        
+        if let node = firstBody.node, node.name == "asteroid" {
+            node.removeFromParent()
+        }
+        
+        if let node = secondBody.node, node.name == "asteroid" {
+            node.removeFromParent()
+        }
     }
     
 }
