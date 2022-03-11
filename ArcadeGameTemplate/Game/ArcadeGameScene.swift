@@ -21,7 +21,6 @@ class ArcadeGameScene: SKScene {
     
     var player: SKShapeNode!
     
-    // 4.
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
     
@@ -31,8 +30,6 @@ class ArcadeGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
-        // ...
         
         // If the game over condition is met, the game will finish
         if self.isGameOver { self.finishGame() }
@@ -47,6 +44,16 @@ class ArcadeGameScene: SKScene {
         self.gameLogic.increaseSessionTime(by: timeElapsedSinceLastUpdate)
         
         self.lastUpdate = currentTime
+        
+        // 2.
+        if isMovingToTheRight {
+            self.moveRight()
+        }
+        
+        if isMovingToTheLeft {
+            self.moveLeft()
+        }
+        
     }
     
 }
@@ -92,12 +99,10 @@ extension ArcadeGameScene {
 // MARK: - Handle Player Inputs
 extension ArcadeGameScene {
     
-    // 1.
     enum SideOfTheScreen {
         case right, left
     }
     
-    // 2.
     private func sideTouched(for position: CGPoint) -> SideOfTheScreen {
         if position.x < self.frame.width / 2 {
             return .left
@@ -107,7 +112,6 @@ extension ArcadeGameScene {
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 3.
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         
@@ -126,11 +130,24 @@ extension ArcadeGameScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // 5.
         self.isMovingToTheRight = false
         self.isMovingToTheLeft = false
     }
     
+}
+
+// MARK: - Player Movement
+extension ArcadeGameScene {
+    // 1.
+    private func moveLeft() {
+        self.player.physicsBody?.applyForce(CGVector(dx: 5, dy: 0))
+        print("Moving Left: \(player.physicsBody!.velocity)")
+    }
+    // 1.
+    private func moveRight() {
+        self.player.physicsBody?.applyForce(CGVector(dx: -5, dy: 0))
+        print("Moving Right: \(player.physicsBody!.velocity)")
+    }
 }
 
 
