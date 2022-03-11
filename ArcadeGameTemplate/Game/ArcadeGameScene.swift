@@ -19,8 +19,8 @@ class ArcadeGameScene: SKScene {
     // Used to calculate how much time has passed between updates.
     var lastUpdate: TimeInterval = 0
     
-    // 1.
     var player: SKShapeNode!
+    // ...
     
     override func didMove(to view: SKView) {
         self.setUpGame()
@@ -57,8 +57,9 @@ extension ArcadeGameScene {
         
         // TODO: Customize!
         
-        // 3.
         self.createPlayer(at: CGPoint(x: self.frame.width/2, y: self.frame.height/6))
+        
+        self.startAsteroidsCycle()
     }
     
     private func setUpPhysicsWorld() {
@@ -69,7 +70,6 @@ extension ArcadeGameScene {
         self.gameLogic.restartGame()
     }
     
-    // 2.
     private func createPlayer(at position: CGPoint) {
         self.player = SKShapeNode(circleOfRadius: 25.0)
         self.player.name = ""
@@ -144,6 +144,56 @@ extension ArcadeGameScene {
     
     private func registerScore() {
         // TODO: Customize!
+    }
+    
+}
+
+// MARK: - Asteroids
+extension ArcadeGameScene {
+    
+    // 1.
+    private func newAsteroid(at position: CGPoint) {
+        let newAsteroid = SKShapeNode(circleOfRadius: 25)
+        
+        newAsteroid.fillColor = SKColor.red
+        newAsteroid.strokeColor = SKColor.black
+        
+        newAsteroid.position = position
+        
+        addChild(newAsteroid)
+        
+        // 3.
+        newAsteroid.run(SKAction.sequence([
+            SKAction.wait(forDuration: 5.0),
+            SKAction.removeFromParent()
+        ]))
+    }
+    
+    // 2.
+    private func randomAsteroidPosition() -> CGPoint {
+        let initialX: CGFloat = 25
+        let finalX: CGFloat = self.frame.width - 25
+        let positionX = CGFloat.random(in: initialX...finalX)
+        let positionY = frame.height - 25
+        
+        return CGPoint(x: positionX, y: positionY)
+    }
+    
+    // 3.
+    func createAsteroid() {
+        let asteroidPosition = self.randomAsteroidPosition()
+        newAsteroid(at: asteroidPosition)
+    }
+    
+    // 3.
+    func startAsteroidsCycle() {
+        let createAsteroidAction = SKAction.run(createAsteroid)
+        let waitAction = SKAction.wait(forDuration: 3.0)
+        
+        let createAndWaitAction = SKAction.sequence([createAsteroidAction, waitAction])
+        let asteroidCycleAction = SKAction.repeatForever(createAndWaitAction)
+        
+        run(asteroidCycleAction)
     }
     
 }
