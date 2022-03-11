@@ -63,7 +63,8 @@ extension ArcadeGameScene {
     }
     
     private func setUpPhysicsWorld() {
-        // TODO: Customize!
+        // 1.
+        physicsWorld.gravity = CGVector(dx: 0, dy: -0.9)
     }
     
     private func restartGame() {
@@ -77,6 +78,10 @@ extension ArcadeGameScene {
         self.player.strokeColor = SKColor.black
         
         self.player.position = position
+        
+        // 2.
+        player.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        player.physicsBody?.affectedByGravity = false
         
         addChild(self.player)
     }
@@ -151,25 +156,25 @@ extension ArcadeGameScene {
 // MARK: - Asteroids
 extension ArcadeGameScene {
     
-    // 1.
     private func newAsteroid(at position: CGPoint) {
-        let newAsteroid = SKShapeNode(circleOfRadius: 25)
+        let newAsteroid = SKShapeNode(circleOfRadius: 25.0)
         
         newAsteroid.fillColor = SKColor.red
         newAsteroid.strokeColor = SKColor.black
         
         newAsteroid.position = position
         
+        // 3.
+        newAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        
         addChild(newAsteroid)
         
-        // 3.
         newAsteroid.run(SKAction.sequence([
             SKAction.wait(forDuration: 5.0),
             SKAction.removeFromParent()
         ]))
     }
     
-    // 2.
     private func randomAsteroidPosition() -> CGPoint {
         let initialX: CGFloat = 25
         let finalX: CGFloat = self.frame.width - 25
@@ -179,13 +184,11 @@ extension ArcadeGameScene {
         return CGPoint(x: positionX, y: positionY)
     }
     
-    // 3.
     func createAsteroid() {
         let asteroidPosition = self.randomAsteroidPosition()
         newAsteroid(at: asteroidPosition)
     }
     
-    // 3.
     func startAsteroidsCycle() {
         let createAsteroidAction = SKAction.run(createAsteroid)
         let waitAction = SKAction.wait(forDuration: 3.0)
