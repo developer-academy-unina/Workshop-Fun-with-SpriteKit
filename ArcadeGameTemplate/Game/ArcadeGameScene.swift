@@ -20,7 +20,10 @@ class ArcadeGameScene: SKScene {
     var lastUpdate: TimeInterval = 0
     
     var player: SKShapeNode!
-    // ...
+    
+    // 4.
+    var isMovingToTheRight: Bool = false
+    var isMovingToTheLeft: Bool = false
     
     override func didMove(to view: SKView) {
         self.setUpGame()
@@ -63,7 +66,6 @@ extension ArcadeGameScene {
     }
     
     private func setUpPhysicsWorld() {
-        // 1.
         physicsWorld.gravity = CGVector(dx: 0, dy: -0.9)
     }
     
@@ -79,7 +81,6 @@ extension ArcadeGameScene {
         
         self.player.position = position
         
-        // 2.
         player.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
         player.physicsBody?.affectedByGravity = false
         
@@ -91,13 +92,33 @@ extension ArcadeGameScene {
 // MARK: - Handle Player Inputs
 extension ArcadeGameScene {
     
-    //TODO: Add comment here
+    // 1.
+    enum SideOfTheScreen {
+        case right, left
+    }
+    
+    // 2.
+    private func sideTouched(for position: CGPoint) -> SideOfTheScreen {
+        if position.x < self.frame.width / 2 {
+            return .left
+        } else {
+            return .right
+        }
+    }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        // 3.
+        guard let touch = touches.first else { return }
+        let touchLocation = touch.location(in: self)
         
-        // TODO: Customize!
-        
-        self.gameLogic.finishTheGame()
+        switch sideTouched(for: touchLocation) {
+        case .right:
+            // print("➡️ Right side of the screen touched")
+            self.isMovingToTheRight = true
+        case .left:
+            // print("⬅️ Left side of the screen touched")
+            self.isMovingToTheLeft = true
+        }
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -105,7 +126,9 @@ extension ArcadeGameScene {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        // TODO: Customize!
+        // 5.
+        self.isMovingToTheRight = false
+        self.isMovingToTheLeft = false
     }
     
 }
@@ -164,7 +187,6 @@ extension ArcadeGameScene {
         
         newAsteroid.position = position
         
-        // 3.
         newAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
         
         addChild(newAsteroid)
