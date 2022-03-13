@@ -11,6 +11,7 @@ struct PhysicsCategory {
     static let all      : UInt32 = UInt32.max
     static let player   : UInt32 = 0b1
     static let asteroid : UInt32 = 0b10
+    static let smallAsteroid : UInt32 = 0b100
 }
 
 class ArcadeGameScene: SKScene {
@@ -23,6 +24,8 @@ class ArcadeGameScene: SKScene {
     
     var isMovingToTheRight: Bool = false
     var isMovingToTheLeft: Bool = false
+    
+    var isStabilizingPlayerPosition = false
     
     override func didMove(to view: SKView) {
         self.setUpGame()
@@ -156,6 +159,18 @@ extension ArcadeGameScene {
         player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         print("Player velocity reseted: \(player.physicsBody!.velocity)")
     }
+    
+    private func stabilizePlayerPosition() {
+        print("- Stabilizing the player position")
+        let positionY = self.frame.height / 6
+
+        let moveAction = SKAction.moveTo(y: positionY, duration: 2.0)
+        let finishStabilizing = SKAction.run { self.isStabilizingPlayerPosition = false }
+
+        player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        
+        player.run(SKAction.sequence([moveAction, finishStabilizing]))
+    }
 }
 
 
@@ -229,6 +244,47 @@ extension ArcadeGameScene {
         run(asteroidCycleAction)
     }
     
+    private func newSmallAsteroid(at position: CGPoint) -> SKShapeNode {
+        let smallAsteroid = SKShapeNode(circleOfRadius: 5.0)
+        smallAsteroid.fillColor = SKColor.red
+        smallAsteroid.strokeColor = SKColor.red
+        
+        smallAsteroid.position = position
+        
+        smallAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 5.0)
+        smallAsteroid.physicsBody?.affectedByGravity = true
+        
+        smallAsteroid.physicsBody?.categoryBitMask = PhysicsCategory.smallAsteroid
+        smallAsteroid.physicsBody?.contactTestBitMask = PhysicsCategory.none
+        smallAsteroid.physicsBody?.collisionBitMask = PhysicsCategory.none
+        
+        return smallAsteroid
+    }
+    
+    private func destroy(asteroid: SKShapeNode) {
+        let bigAsteroidPosition = asteroid.position
+        
+        var smallAsteroids = [SKShapeNode]()
+        
+        for _ in 1...8 {
+            let smallAsteroid = self.newSmallAsteroid(at: bigAsteroidPosition)
+            smallAsteroids.append(smallAsteroid)
+        }
+        
+        asteroid.removeFromParent()
+        
+        for (index, asteroid) in smallAsteroids.enumerated() {
+            addChild(asteroid)
+            let randomDX = CGFloat.random(in: 0...1) * CGFloat.pi * CGFloat(index % 2 == 0 ? 1 : -1)
+            let randomDY = CGFloat.random(in: 0...1) * CGFloat.pi * CGFloat(index % 2 == 0 ? 1 : -1)
+            asteroid.physicsBody?.applyImpulse(CGVector(dx: randomDX, dy: randomDY))
+            asteroid.run(SKAction.sequence([
+                SKAction.wait(forDuration: 1.0),
+                SKAction.removeFromParent()
+            ]))
+        }
+    }
+    
 }
 
 // MARK: - Contacts and Collisions
@@ -239,12 +295,22 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         let firstBody: SKPhysicsBody = contact.bodyA
         let secondBody: SKPhysicsBody = contact.bodyB
         
-        if let node = firstBody.node, node.name == "asteroid" {
-            node.removeFromParent()
+        if let node = firstBody.node as? SKShapeNode, node.name == "asteroid" {
+            destroy(asteroid: node)
+            
+            run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.6),
+                SKAction.run { self.stabilizePlayerPosition() }
+            ]))
         }
         
-        if let node = secondBody.node, node.name == "asteroid" {
-            node.removeFromParent()
+        if let node = secondBody.node as? SKShapeNode, node.name == "asteroid" {
+            destroy(asteroid: node)
+            
+            run(SKAction.sequence([
+                SKAction.wait(forDuration: 0.6),
+                SKAction.run { self.stabilizePlayerPosition() }
+            ]))
         }
     }
     
