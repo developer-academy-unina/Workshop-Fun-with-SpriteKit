@@ -41,12 +41,16 @@ class ArcadeGameScene: SKScene {
         
         self.lastUpdate = currentTime
         
-        if isMovingToTheRight {
+        if isMovingToTheRight && (player.position.x > 0) {
             self.moveRight()
         }
         
-        if isMovingToTheLeft {
+        if isMovingToTheLeft && (player.position.x < frame.width) {
             self.moveLeft()
+        }
+        
+        if (player.position.x <= 0) || (player.position.x >= frame.width) {
+            self.resetPlayerVelocity()
         }
     }
     
@@ -75,14 +79,14 @@ extension ArcadeGameScene {
     }
     
     private func createPlayer(at position: CGPoint) {
-        self.player = SKShapeNode(circleOfRadius: 25.0)
+        self.player = SKShapeNode(circleOfRadius: 10.0)
         self.player.name = "player"
         self.player.fillColor = SKColor.blue
         self.player.strokeColor = SKColor.black
         
         self.player.position = position
         
-        player.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        player.physicsBody = SKPhysicsBody(circleOfRadius: 10.0)
         player.physicsBody?.affectedByGravity = false
         
         player.physicsBody?.categoryBitMask = PhysicsCategory.player
@@ -117,6 +121,9 @@ extension ArcadeGameScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         
+        self.isMovingToTheRight = false
+        self.isMovingToTheLeft = false
+        
         switch sideTouched(for: touchLocation) {
         case .right:
             self.isMovingToTheRight = true
@@ -143,6 +150,11 @@ extension ArcadeGameScene {
     private func moveRight() {
         self.player.physicsBody?.applyForce(CGVector(dx: -5, dy: 0))
         print("Moving Right: \(player.physicsBody!.velocity)")
+    }
+    
+    private func resetPlayerVelocity() {
+        player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
+        print("Player velocity reseted: \(player.physicsBody!.velocity)")
     }
 }
 
@@ -172,14 +184,14 @@ extension ArcadeGameScene {
 extension ArcadeGameScene {
     
     private func newAsteroid(at position: CGPoint) {
-        let newAsteroid = SKShapeNode(circleOfRadius: 25.0)
+        let newAsteroid = SKShapeNode(circleOfRadius: 15.0)
         newAsteroid.name = "asteroid"
         newAsteroid.fillColor = SKColor.red
         newAsteroid.strokeColor = SKColor.black
         
         newAsteroid.position = position
         
-        newAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 25.0)
+        newAsteroid.physicsBody = SKPhysicsBody(circleOfRadius: 15.0)
         
         newAsteroid.physicsBody?.categoryBitMask = PhysicsCategory.asteroid
         newAsteroid.physicsBody?.contactTestBitMask = PhysicsCategory.player
