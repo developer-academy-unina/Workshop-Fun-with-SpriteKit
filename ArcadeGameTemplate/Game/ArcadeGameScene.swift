@@ -123,9 +123,6 @@ extension ArcadeGameScene {
         guard let touch = touches.first else { return }
         let touchLocation = touch.location(in: self)
         
-        self.isMovingToTheRight = false
-        self.isMovingToTheLeft = false
-        
         switch sideTouched(for: touchLocation) {
         case .right:
             self.isMovingToTheRight = true
