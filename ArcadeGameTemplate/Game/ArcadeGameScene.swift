@@ -38,7 +38,6 @@ class ArcadeGameScene: SKScene {
         
         if self.lastUpdate == 0 { self.lastUpdate = currentTime }
         
-        // Calculates how much time has passed since the last update
         let timeElapsedSinceLastUpdate = currentTime - self.lastUpdate
         self.gameLogic.increaseSessionTime(by: timeElapsedSinceLastUpdate)
         
@@ -177,7 +176,7 @@ extension ArcadeGameScene {
 // MARK: - Game Over Condition
 extension ArcadeGameScene {
     var isGameOver: Bool {
-        return gameLogic.isGameOver
+        return gameLogic.numberOfMissedAsteroids >= 3
     }
     
     private func finishGame() {
@@ -216,6 +215,7 @@ extension ArcadeGameScene {
         
         newAsteroid.run(SKAction.sequence([
             SKAction.wait(forDuration: 5.0),
+            SKAction.run { self.gameLogic.addMissedAsteroid() },
             SKAction.removeFromParent()
         ]))
     }
