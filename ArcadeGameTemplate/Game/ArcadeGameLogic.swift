@@ -6,7 +6,7 @@
 import Foundation
 
 class ArcadeGameLogic: ObservableObject {
-
+    
     static let shared: ArcadeGameLogic = ArcadeGameLogic()
     
     func setUpGame() {
@@ -45,6 +45,16 @@ class ArcadeGameLogic: ObservableObject {
     
     func addMissedAsteroid() {
         self.numberOfMissedAsteroids += 1
+    }
+    
+    var asteroidsSpawnRate: TimeInterval = 3.0
+    
+    var shouldIncreaseDifficulty: Bool {
+        return (currentScore % 10 == 0)
+    }
+    
+    func increaseDifficulty() {
+        asteroidsSpawnRate = asteroidsSpawnRate - (asteroidsSpawnRate * 0.05)
     }
     
 }

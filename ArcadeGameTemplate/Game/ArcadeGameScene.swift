@@ -15,7 +15,7 @@ struct PhysicsCategory {
 }
 
 class ArcadeGameScene: SKScene {
-
+    
     var gameLogic: ArcadeGameLogic = ArcadeGameLogic.shared
     
     var lastUpdate: TimeInterval = 0
@@ -159,10 +159,10 @@ extension ArcadeGameScene {
     private func stabilizePlayerPosition() {
         print("- Stabilizing the player position")
         let positionY = self.frame.height / 6
-
+        
         let moveAction = SKAction.moveTo(y: positionY, duration: 2.0)
         let finishStabilizing = SKAction.run { self.isStabilizingPlayerPosition = false }
-
+        
         player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
         
         player.run(SKAction.sequence([moveAction, finishStabilizing]))
@@ -186,6 +186,12 @@ extension ArcadeGameScene {
 extension ArcadeGameScene {
     private func scorePoint() {
         self.gameLogic.score(points: 1)
+        
+        if gameLogic.shouldIncreaseDifficulty {
+            gameLogic.increaseDifficulty()
+            
+            self.startAsteroidsCycle()
+        }
     }
     
     private func registerScore() {
@@ -214,7 +220,7 @@ extension ArcadeGameScene {
         addChild(newAsteroid)
         
         newAsteroid.run(SKAction.sequence([
-            SKAction.wait(forDuration: 5.0),
+            SKAction.wait(forDuration: 4.0),
             SKAction.run { self.gameLogic.addMissedAsteroid() },
             SKAction.removeFromParent()
         ]))
@@ -236,12 +242,12 @@ extension ArcadeGameScene {
     
     func startAsteroidsCycle() {
         let createAsteroidAction = SKAction.run(createAsteroid)
-        let waitAction = SKAction.wait(forDuration: 3.0)
+        let waitAction = SKAction.wait(forDuration: gameLogic.asteroidsSpawnRate)
         
         let createAndWaitAction = SKAction.sequence([createAsteroidAction, waitAction])
         let asteroidCycleAction = SKAction.repeatForever(createAndWaitAction)
         
-        run(asteroidCycleAction)
+        run(asteroidCycleAction, withKey: "asternoidCycle")
     }
     
     private func newSmallAsteroid(at position: CGPoint) -> SKShapeNode {
@@ -289,7 +295,7 @@ extension ArcadeGameScene {
 
 // MARK: - Contacts and Collisions
 extension ArcadeGameScene: SKPhysicsContactDelegate {
-
+    
     func didBegin(_ contact: SKPhysicsContact) {
         // 6.
         let firstBody: SKPhysicsBody = contact.bodyA
