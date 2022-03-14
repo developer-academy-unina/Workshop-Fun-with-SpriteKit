@@ -37,20 +37,13 @@ typealias Instruction = (icon: String, title: String, description: String)
  */
 
 struct MainScreenProperties {
-    static let gameTitle: String = "Game Title"
+    static let gameTitle: String = "EARTH DEFENDER"
     
     static let gameInstructions: [Instruction] = [
-        (icon: "hand.raised", title: "Instruction 1", description: "Instruction description."),
-        (icon: "hand.tap", title: "Instruction 2", description: "Instruction description."),
-        (icon: "hand.draw", title: "Instruction 3", description: "Instruction description."),
-        (icon: "hand.tap", title: "Instruction 4", description: "Instruction description."),
-        (icon: "hand.raised", title: "Instruction 5", description: "Instruction description."),
-        (icon: "hands.sparkles", title: "Instruction 6", description: "Instruction description."),
+        (icon: "hand.tap", title: "Tap to Move", description: "Tap on the left and right of the screen to activate the space ship engines."),
+        (icon: "divide.circle", title: "Destroy Asteroids", description: "Destroy asteroids by colliding with them."),
+        (icon: "multiply.circle", title: "Don't let them pass!", description: "If three asteroids pass you lose!")
     ]
-    
-    /**
-     * To change the Accent Color of the applciation edit it on the Assets folder.
-     */
     
     static let accentColor: Color = Color.accentColor
 }

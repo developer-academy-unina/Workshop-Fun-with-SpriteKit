@@ -30,21 +30,13 @@ struct MainScreenView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 16.0) {
-            Spacer()
             
-            /**
-             * # PRO TIP!
-             * The game title can be customized to represent the visual identity of the game
-             */
             Text("\(self.gameTitle)")
                 .font(.title)
                 .fontWeight(.black)
             
             Spacer()
             
-            /**
-             * To customize the instructions, check the **Constants.swift** file
-             */
             ForEach(self.gameInstructions, id: \.title) { instruction in
                 GroupBox(label: Label("\(instruction.title)", systemImage: "\(instruction.icon)").foregroundColor(self.accentColor)) {
                     HStack {
@@ -57,9 +49,6 @@ struct MainScreenView: View {
             
             Spacer()
             
-            /**
-             * Customize the appearance of the **Insert a Coin** button to match the visual identity of your game
-             */
             Button {
                 withAnimation { self.startGame() }
             } label: {
