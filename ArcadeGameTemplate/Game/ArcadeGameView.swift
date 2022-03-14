@@ -31,13 +31,10 @@ struct ArcadeGameView: View {
                 .frame(width: screenWidth, height: screenHeight)
                 .statusBar(hidden: true)
             
-            HStack() {
-                GameDurationView(time: $gameLogic.sessionDuration)
-                
-                Spacer()
-                
+            VStack(alignment: .center) {
                 GameScoreView(score: $gameLogic.currentScore)
             }
+            .frame(width: 200)
             .padding()
             .padding(.top, 24)
         }
