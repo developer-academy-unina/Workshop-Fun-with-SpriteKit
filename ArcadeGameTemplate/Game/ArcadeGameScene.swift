@@ -184,6 +184,9 @@ extension ArcadeGameScene {
 
 // MARK: - Register Score
 extension ArcadeGameScene {
+    private func scorePoint() {
+        self.gameLogic.score(points: 1)
+    }
     
     private func registerScore() {
         // TODO: Customize!
@@ -293,7 +296,8 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         let secondBody: SKPhysicsBody = contact.bodyB
         
         if let node = firstBody.node as? SKShapeNode, node.name == "asteroid" {
-            destroy(asteroid: node)
+            self.destroy(asteroid: node)
+            self.scorePoint()
             
             run(SKAction.sequence([
                 SKAction.wait(forDuration: 0.6),
@@ -302,7 +306,8 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         }
         
         if let node = secondBody.node as? SKShapeNode, node.name == "asteroid" {
-            destroy(asteroid: node)
+            self.destroy(asteroid: node)
+            self.scorePoint()
             
             run(SKAction.sequence([
                 SKAction.wait(forDuration: 0.6),
