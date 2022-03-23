@@ -31,8 +31,9 @@ struct ArcadeGameView: View {
                 .frame(width: screenWidth, height: screenHeight)
                 .statusBar(hidden: true)
             
-            VStack(alignment: .center) {
+            HStack(alignment: .center) {
                 GameScoreView(score: $gameLogic.currentScore)
+                AsteroidCounterView(numberOfMissedAsteroids: $gameLogic.numberOfMissedAsteroids)
             }
             .frame(width: 200)
             .padding()

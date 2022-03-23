@@ -53,6 +53,7 @@ class ArcadeGameLogic: ObservableObject {
         return (currentScore % 10 == 0)
     }
     
+    
     func increaseDifficulty() {
         asteroidsSpawnRate = asteroidsSpawnRate - (asteroidsSpawnRate * 0.05)
     }

@@ -33,9 +33,10 @@ class ArcadeGameScene: SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        
+        // # Game Over Conditions
         if self.isGameOver { self.finishGame() }
         
+        // # Time tracking logic
         if self.lastUpdate == 0 { self.lastUpdate = currentTime }
         
         let timeElapsedSinceLastUpdate = currentTime - self.lastUpdate
@@ -43,6 +44,7 @@ class ArcadeGameScene: SKScene {
         
         self.lastUpdate = currentTime
         
+        // # Movement Logic
         if isMovingToTheRight && (player.position.x > 0) {
             self.moveRight()
         }
@@ -143,21 +145,17 @@ extension ArcadeGameScene {
     
     private func moveLeft() {
         self.player.physicsBody?.applyForce(CGVector(dx: 5, dy: 0))
-        print("Moving Left: \(player.physicsBody!.velocity)")
     }
     
     private func moveRight() {
         self.player.physicsBody?.applyForce(CGVector(dx: -5, dy: 0))
-        print("Moving Right: \(player.physicsBody!.velocity)")
     }
     
     private func resetPlayerVelocity() {
         player.physicsBody?.velocity = CGVector(dx: 0, dy: 0)
-        print("Player velocity reseted: \(player.physicsBody!.velocity)")
     }
     
     private func stabilizePlayerPosition() {
-        print("- Stabilizing the player position")
         let positionY = self.frame.height / 6
         
         let moveAction = SKAction.moveTo(y: positionY, duration: 2.0)
@@ -190,7 +188,10 @@ extension ArcadeGameScene {
         if gameLogic.shouldIncreaseDifficulty {
             gameLogic.increaseDifficulty()
             
-            self.startAsteroidsCycle()
+            run(SKAction.sequence([
+                SKAction.wait(forDuration: gameLogic.asteroidsSpawnRate),
+                SKAction.run { self.startAsteroidsCycle() }
+            ]))
         }
     }
     
@@ -300,7 +301,7 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         // 6.
         let firstBody: SKPhysicsBody = contact.bodyA
         let secondBody: SKPhysicsBody = contact.bodyB
-        
+
         if let node = firstBody.node as? SKShapeNode, node.name == "asteroid" {
             self.destroy(asteroid: node)
             self.scorePoint()

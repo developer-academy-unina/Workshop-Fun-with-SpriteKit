@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2717FC9827E9DD5300C53B51 /* AsteroidCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2717FC9727E9DD5300C53B51 /* AsteroidCounterView.swift */; };
 		271CB25127D6569700615359 /* ArcadeGameTemplateApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271CB25027D6569700615359 /* ArcadeGameTemplateApp.swift */; };
 		271CB25327D6569700615359 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 271CB25227D6569700615359 /* ContentView.swift */; };
 		271CB25527D6569900615359 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 271CB25427D6569900615359 /* Assets.xcassets */; };
@@ -22,6 +23,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2717FC9727E9DD5300C53B51 /* AsteroidCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AsteroidCounterView.swift; sourceTree = "<group>"; };
 		271CB24D27D6569700615359 /* ArcadeGameTemplate.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ArcadeGameTemplate.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		271CB25027D6569700615359 /* ArcadeGameTemplateApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArcadeGameTemplateApp.swift; sourceTree = "<group>"; };
 		271CB25227D6569700615359 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -93,6 +95,7 @@
 				271CB26227D656C100615359 /* ArcadeGameView.swift */,
 				271CB26F27D74CAF00615359 /* GameDurationView.swift */,
 				271CB27127D74CB900615359 /* GameScoreView.swift */,
+				2717FC9727E9DD5300C53B51 /* AsteroidCounterView.swift */,
 				271CB26D27D6A58A00615359 /* ArcadeGameScene.swift */,
 				271CB25E27D656A800615359 /* ArcadeGameLogic.swift */,
 			);
@@ -197,6 +200,7 @@
 				271CB26E27D6A58A00615359 /* ArcadeGameScene.swift in Sources */,
 				271CB26127D656BA00615359 /* MainScreenView.swift in Sources */,
 				271CB25F27D656A800615359 /* ArcadeGameLogic.swift in Sources */,
+				2717FC9827E9DD5300C53B51 /* AsteroidCounterView.swift in Sources */,
 				271CB25327D6569700615359 /* ContentView.swift in Sources */,
 				271CB27227D74CB900615359 /* GameScoreView.swift in Sources */,
 				271CB25127D6569700615359 /* ArcadeGameTemplateApp.swift in Sources */,

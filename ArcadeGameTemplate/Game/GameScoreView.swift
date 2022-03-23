@@ -26,7 +26,6 @@ struct GameScoreView: View {
         }
         .frame(minWidth: 100)
         .padding(24)
-        .foregroundColor(.black)
         .background(Color(UIColor.systemGray6))
         .cornerRadius(10)
     }
@@ -34,7 +33,14 @@ struct GameScoreView: View {
 
 struct GameScoreView_Previews: PreviewProvider {
     static var previews: some View {
-        GameScoreView(score: .constant(100))
+        Group {
+            GameScoreView(score: .constant(100))
+                .preferredColorScheme(.light)
             .previewLayout(.fixed(width: 300, height: 100))
+            
+            GameScoreView(score: .constant(100))
+                .preferredColorScheme(.dark)
+                .previewLayout(.fixed(width: 300, height: 100))
+        }
     }
 }
