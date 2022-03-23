@@ -17,6 +17,7 @@ struct PhysicsCategory {
 class ArcadeGameScene: SKScene {
     
     var gameLogic: ArcadeGameLogic = ArcadeGameLogic.shared
+    private var vibrationMotor: GameVibrationMotor?
     
     var lastUpdate: TimeInterval = 0
     
@@ -30,6 +31,7 @@ class ArcadeGameScene: SKScene {
     override func didMove(to view: SKView) {
         self.setUpGame()
         self.setUpPhysicsWorld()
+        self.setUpVibrationMotor()
     }
     
     override func update(_ currentTime: TimeInterval) {
@@ -76,6 +78,10 @@ extension ArcadeGameScene {
         physicsWorld.gravity = CGVector(dx: 0, dy: -0.9)
         
         physicsWorld.contactDelegate = self
+    }
+    
+    private func setUpVibrationMotor() {
+        self.vibrationMotor = GameVibrationMotor()
     }
     
     private func restartGame() {
@@ -303,6 +309,10 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         let secondBody: SKPhysicsBody = contact.bodyB
 
         if let node = firstBody.node as? SKShapeNode, node.name == "asteroid" {
+            Task {
+                await self.vibrationMotor?.playCollision()
+            }
+            
             self.destroy(asteroid: node)
             self.scorePoint()
             
@@ -313,6 +323,10 @@ extension ArcadeGameScene: SKPhysicsContactDelegate {
         }
         
         if let node = secondBody.node as? SKShapeNode, node.name == "asteroid" {
+            Task {
+                await self.vibrationMotor?.playCollision()
+            }
+            
             self.destroy(asteroid: node)
             self.scorePoint()
             
